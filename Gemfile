@@ -42,6 +42,8 @@ group :development, :test do
 end
 gem 'graphql', '1.7.4'
 gem "minitest-rails"
+gem 'bcrypt', '~> 3.1.7'
+gem 'pry'
 group :development do
   # Access an interactive console on exception pages or by calling 'console' anywhere in the code.
   gem 'web-console', '>= 3.3.0'
