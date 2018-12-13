@@ -6,10 +6,11 @@ class Resolvers::CreateLink < GraphQL::Function
   type Types::LinkType
 
 
-  def call(_obj, args, _ctx)
-    Link.create(
+  def call(obj, args, ctx)
+    Link.create!(
       description: args[:description],
-      url: args[:url]
+      url: args[:url],
+      user: ctx[:current_user]
     )
   end
 end
