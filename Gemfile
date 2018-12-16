@@ -33,6 +33,10 @@ gem 'jbuilder', '~> 2.5'
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development
 
+# Authentication
+gem 'devise-jwt'
+gem 'devise'
+
 # Reduces boot times through caching; required in config/boot.rb
 gem 'bootsnap', '>= 1.1.0', require: false
 
@@ -60,3 +64,7 @@ end
 gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
 
 gem 'graphiql-rails', '1.4.4', group: :development
+gem 'dotenv-rails', groups: [:development, :test]
+gem 'graphql-preload', '~> 1.0.4'
+gem 'jwt', '~> 2.1.0'
+gem 'rack-cors', require: 'rack/cors'
