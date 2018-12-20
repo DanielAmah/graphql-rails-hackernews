@@ -1,6 +1,6 @@
 class AuthToken
   def self.token(user)
-    payload = { user_id: user.id }
+    payload = { user_id: user.id, user_email: user.email }
     JsonWebToken.encode(payload)
   end
 

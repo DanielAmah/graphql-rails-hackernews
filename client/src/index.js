@@ -5,7 +5,7 @@ import { ApolloProvider } from "react-apollo";
 // import gql from "graphql-tag";
 import { InMemoryCache } from 'apollo-cache-inmemory'
 
-import App from './App';
+import App from './routes';
 import 'semantic-ui-css/semantic.min.css';
 import * as serviceWorker from './serviceWorker';
 
