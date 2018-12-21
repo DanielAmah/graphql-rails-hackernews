@@ -7,6 +7,7 @@ import ReduxToastr from 'react-redux-toastr'
 import Login from './components/Login'
 import Register from './components/Register'
 import Home from './components/Home'
+import NotFound from './components/NotFound'
 import './App.css'
 import { isAuthenticated } from './helpers/authentication';
 import configureStore from './store';
@@ -31,6 +32,7 @@ class AppRoute extends Component {
           <Route path="/login" exact render={(props) => (!isAuthenticated(props)?  <Login {...props} /> : <Redirect to="/"/>)} />
           <Route path="/" exact render={(props) => (isAuthenticated(props) ?  <Home {...props}/> : <Redirect to="/login"/>)}  />
           <Route exact path="/register" component={Register} />
+          <Route component={NotFound} />
           </Switch>
         </div>
         </Router>

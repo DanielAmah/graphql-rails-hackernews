@@ -12,17 +12,17 @@ class Resolvers::SignInUser < GraphQL::Function
     input = args[:email]
 
     return unless input
-
+    # user = User.valid_login?(input[:email], input[:password])
     user = User.find_by email: input[:email]
-
     return unless user
     return unless user.valid_password?(input[:password])
-
-    ctx[:session][:token] = AuthToken.token(user)
-
-    OpenStruct.new({
-      token: AuthToken.token(user),
-      user: user
-    })
+    if user.update_column(:authentication_token, Devise.friendly_token)
+      token = user.authentication_token
+      ctx[:session][:token] = token
+      OpenStruct.new({
+        token: token,
+        user: user
+      })
+    end
   end
 end

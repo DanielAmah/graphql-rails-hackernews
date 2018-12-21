@@ -17,7 +17,6 @@ class Login extends Component {
 
   async handleLogin(e){
     e.preventDefault();
-    console.log(this.state.email, this.state.password)
     const LoginQuery =`mutation{
       signinUser(
         email: {
@@ -36,7 +35,9 @@ class Login extends Component {
       try{
         const res = await axiosInstance.post("graphql", { query: LoginQuery },{})
         const token = res.data.data.signinUser.token
-        window.localStorage.setItem("jwt-token", token)
+        const email = res.data.data.signinUser.user.email
+        window.localStorage.setItem("token", token)
+        window.localStorage.setItem("email", email)
         this.props.history.push("/")
       }catch(e){
         toastr.error("Incorrect Username or Password")

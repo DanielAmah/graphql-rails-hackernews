@@ -16,7 +16,6 @@ class Register extends Component {
 
   async handleRegister(e){
     e.preventDefault();
-    console.log(this.state.email, this.state.password)
     const RegistrationQuery =`mutation{
       createUser(
         authProvider: {
@@ -32,7 +31,6 @@ class Register extends Component {
 
       try{
         const res = await axiosInstance.post("graphql", { query: RegistrationQuery },{})
-        console.log(res.data.data.createUser);
         if(res.data.data.createUser){
           this.props.history.push("/login")
         }

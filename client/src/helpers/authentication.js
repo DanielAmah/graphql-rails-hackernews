@@ -1,6 +1,5 @@
 import axios from 'axios'
 import { config } from '../config';
-const jwtDecode = require('jwt-decode');
 
 const baseURL =  `${config.RAILS_API_BASE_URL}/`;
 
@@ -9,14 +8,8 @@ export const axiosInstance = axios.create({
 });
 
 export const isAuthenticated = (props) => {
-  if(window.localStorage.getItem("jwt-token")){
-    const token = window.localStorage.getItem("jwt-token")
-    try {
-      jwtDecode(token, {header: true})
+  if(window.localStorage.getItem("token")){
       return true
-    } catch(error) {
-      return false
-    }
     }else {
      return false
     }

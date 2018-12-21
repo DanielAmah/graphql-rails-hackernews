@@ -7,7 +7,6 @@ class Resolvers::CreateLink < GraphQL::Function
 
 
   def call(obj, args, ctx)
-
     if ctx[:current_user].blank?
       raise GraphQL::ExecutionError.new("Authentication required")
     end

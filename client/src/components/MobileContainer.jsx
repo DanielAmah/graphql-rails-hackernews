@@ -49,7 +49,7 @@ class MobileContainer extends Component {
             ) : (
                   <span>
                     <span>
-                      {`Welcome back! ${loggedInUser['user_email'] !== undefined ? loggedInUser.user_email : ''} `}
+                      {`Welcome back! ${loggedInUser !== undefined ? loggedInUser : ''} `}
                     </span>
                     <Menu.Item as='a' onClick={this.props.handleLogout}>Logout</Menu.Item>
                   </span>

@@ -1,17 +1,13 @@
-const jwtDecode = require('jwt-decode');
 
 export const jsonwebtoken = (props) => {
-  if(window.localStorage.getItem("jwt-token")){
-    const token = window.localStorage.getItem("jwt-token")
-    try {
-      const loggedInUser = jwtDecode(token)
+  if(window.localStorage.getItem("email")){
+    const email = window.localStorage.getItem("email")
+
+      const loggedInUser = email
       return loggedInUser;
-    } catch(error) {
-      const loggedInUser = {}
-      return loggedInUser;
-    }
+
     }else {
-      const loggedInUser = {}
+      const loggedInUser = ''
       return loggedInUser;
     }
 
