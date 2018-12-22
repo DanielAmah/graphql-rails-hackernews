@@ -1,19 +1,27 @@
 Rails.application.routes.draw do
-  devise_for :users,
-                path: '',
-                path_names: {
-                  sign_in: 'login',
-                  sign_out: 'logout',
-                  registration: 'signup'
-                },
-                controllers: {
-                  sessions: 'sessions',
-                  registrations: 'registrations'
-                }
+  namespace :api do
+    devise_for :users,
+                  path: '',
+                  path_names: {
+                    sign_in: 'login',
+                    sign_out: 'logout',
+                    registration: 'signup'
+                  },
+                  controllers: {
+                    sessions: 'api/sessions',
+                    registrations: 'api/registrations'
+                  }
 
-  if Rails.env.development?
-      mount GraphiQL::Rails::Engine, at: "/graphiql", graphql_path: "/graphql"
+    if Rails.env.development?
+      authenticated do
+        mount GraphiQL::Rails::Engine, at: "/graphiql", graphql_path: "/api/graphql"
+      end
+    end
+    post "/graphql", to: "graphql#execute"
+    # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
   end
-  post "/graphql", to: "graphql#execute"
-  # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
+
+  get '*path', to: "application#fallback_index_html", constraints: ->(request) do
+    !request.xhr? && request.format.html?
+  end
 end

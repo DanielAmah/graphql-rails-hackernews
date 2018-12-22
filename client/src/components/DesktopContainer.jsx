@@ -23,7 +23,6 @@ class DesktopContainer extends Component {
     const { children } = this.props
     const { fixed } = this.state
     const loggedInUser = jsonwebtoken();
-    console.log(loggedInUser, 'logged in user');
     return (
       <Responsive minWidth={Responsive.onlyTablet.minWidth}>
         <Visibility
@@ -59,7 +58,7 @@ class DesktopContainer extends Component {
                     </span>
                     ):(<span>
                       <span>
-                      {`Welcome back! ${loggedInUser['user_email'] !== undefined ? loggedInUser.user_email : ''} `}
+                      {`Welcome back! ${loggedInUser !== undefined ? loggedInUser : ''} `}
                     </span>
                       <Button as='a' onClick={this.props.handleLogout}>
                       Logout

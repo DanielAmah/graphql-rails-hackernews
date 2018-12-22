@@ -1,3 +1,4 @@
+module Api
 class GraphqlController < ApplicationController
 
   def execute
@@ -17,8 +18,9 @@ class GraphqlController < ApplicationController
   private
 
   def current_user
-    return nil if session[:token].blank?
-    AuthToken.verify(session[:token])
+    return nil if request.headers[:HTTP_X_USER_TOKEN].blank?
+      token = request.headers[:HTTP_X_USER_TOKEN]
+      User.find_by(authentication_token: token)
   end
 
   # Handle form data, JSON body, or a blank value
@@ -38,4 +40,5 @@ class GraphqlController < ApplicationController
       raise ArgumentError, "Unexpected parameter: #{ambiguous_param}"
     end
   end
+end
 end

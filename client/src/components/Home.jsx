@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { Redirect } from 'react-router'
-
+import { axiosInstance } from '../helpers/authentication';
 import ResponsiveContainer from './ResponsiveContainer'
 
 
@@ -11,12 +11,17 @@ class Home extends Component {
     this.state={
       logout: false
     }
+    this.handleLogout = this.handleLogout.bind(this);
   }
 
-  handleLogout = (e) => {
+  async handleLogout(e){
     e.preventDefault()
-    window.localStorage.removeItem("jwt-token");
-    this.setState({ logout: true });
+    const res = await axiosInstance.delete("logout", {},{})
+    console.log(res);
+    if(res){
+      window.localStorage.clear()
+      this.setState({ logout: true });
+    }
   }
 
   render() {

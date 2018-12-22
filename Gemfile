@@ -36,6 +36,7 @@ gem 'jbuilder', '~> 2.5'
 # Authentication
 gem 'devise-jwt'
 gem 'devise'
+gem 'pundit'
 
 # Reduces boot times through caching; required in config/boot.rb
 gem 'bootsnap', '>= 1.1.0', require: false
@@ -57,6 +58,7 @@ group :development do
   # Spring speeds up development by keeping your application running in the background. Read more: https://github.com/rails/spring
   gem 'spring'
   gem 'spring-watcher-listen', '~> 2.0.0'
+  gem 'foreman', '~> 0.82.0'
 end
 
 
@@ -68,3 +70,4 @@ gem 'dotenv-rails', groups: [:development, :test]
 gem 'graphql-preload', '~> 1.0.4'
 gem 'jwt', '~> 2.1.0'
 gem 'rack-cors', require: 'rack/cors'
+gem 'simple_token_authentication', '~> 1.0'
