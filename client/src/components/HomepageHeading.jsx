@@ -9,6 +9,7 @@ import {
 
 import { axiosInstance } from '../helpers/authentication';
 import { toastr } from 'react-redux-toastr'
+import Loader from './Loader'
 import '../App.css'
 
 
@@ -20,20 +21,26 @@ class HomepageHeading extends React.Component {
       allUrls: [],
       modalOpen: false,
       url: '',
-      description: ''
+      description: '',
+      disabled: false,
+      loading: false
     }
     this.handleCreateLink = this.handleCreateLink.bind(this);
   }
 
-  handleOpen = () => this.setState({ modalOpen: true })
+  handleOpen = () => this.setState({ modalOpen: true,  disabled: false })
 
-  handleClose = () => this.setState({ modalOpen: false })
+  handleClose = () => this.setState({ modalOpen: false,  disabled: true})
 
   componentDidMount() {
     this.showUrlListings();
   }
 
   async handleCreateLink() {
+    this.setState({
+      disabled: true,
+      loading: true
+    })
     let createListings = `mutation{
       createLink(
         url: "${this.state.url}",
@@ -51,15 +58,24 @@ class HomepageHeading extends React.Component {
       const res = await axiosInstance.post("graphql", { query: createListings },{headers: { 'X-User-Email': email, 'X-User-Token': token}})
       console.log(res, 'response');
       if(res) {
+        this.setState({
+          loading: false
+        })
         this.handleClose();
         this.showUrlListings();
       }
     }catch(e){
+      this.setState({
+        disabled: false
+      })
       toastr.error(e.message)
     }
   }
 
   async showUrlListings(){
+    this.setState({
+      loading: true
+    })
     let showListings = `query {
       allLinks {
         id
@@ -76,15 +92,16 @@ class HomepageHeading extends React.Component {
     try{
       const res = await axiosInstance.post("graphql", { query: showListings },{headers: {'X-User-Email': email, 'X-User-Token': token}})
       this.setState({
-        allUrls: res.data.data.allLinks
+        allUrls: res.data.data.allLinks,
+        loading: false
       })
     }catch(e){
       toastr.error(e.message)
     }
   }
   render() {
-
-    const urlItems = this.state.allUrls.map(url =>
+    const {disabled, loading, allUrls } = this.state;
+    const urlItems = allUrls.map(url =>
       <List.Item key={url.id}>
         <List.Icon name='linkify' size='large' verticalAlign='middle' />
         <List.Content>
@@ -116,7 +133,7 @@ class HomepageHeading extends React.Component {
               <Form.Field control={TextArea} label='Description' placeholder='A short description about the link..'
                 onChange={e => this.setState({ description: e.target.value })}
               />
-              <Button color='teal' fluid size='large' onClick={this.handleCreateLink}>
+              <Button color='teal' fluid size='large' onClick={this.handleCreateLink} disabled={disabled}>
                 Create Link
               </Button>
             </Segment>
@@ -129,6 +146,9 @@ class HomepageHeading extends React.Component {
         </Modal.Actions>
       </Modal>
         </div>
+        {
+          loading && (<Loader />)
+        }
         <List divided relaxed>
           {urlItems}
         </List>
