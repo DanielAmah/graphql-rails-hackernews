@@ -9,12 +9,16 @@ class Register extends Component {
     super(props);
     this.state = {
       email: '',
-      password: ''
+      password: '',
+      disabled: false
     }
     this.handleRegister = this.handleRegister.bind(this);
   }
 
   async handleRegister(e){
+    this.setState({
+      disabled: true
+    })
     e.preventDefault();
     const RegistrationQuery =`mutation{
       createUser(
@@ -39,6 +43,9 @@ class Register extends Component {
         }
 
       }catch(e){
+        this.setState({
+          disabled: false
+        })
         console.log(e);
         this.props.history.push("/register")
       }
@@ -46,6 +53,7 @@ class Register extends Component {
   }
 
   render() {
+    const {disabled} = this.state;
     return (
       <div className='login-form'>
       {/*
@@ -81,7 +89,7 @@ class Register extends Component {
                 type='password'
                 onChange={e => this.setState({ password: e.target.value })}
               />
-              <Button color='teal' fluid size='large' onClick={this.handleRegister}>
+              <Button color='teal' fluid size='large' onClick={this.handleRegister} disabled={disabled}>
                 Register
               </Button>
             </Segment>

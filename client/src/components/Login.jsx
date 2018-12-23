@@ -10,12 +10,16 @@ class Login extends Component {
     super(props);
     this.state = {
       email: '',
-      password: ''
+      password: '',
+      disabled: false
     }
     this.handleLogin = this.handleLogin.bind(this);
   }
 
   async handleLogin(e){
+    this.setState({
+      disabled: true
+    })
     e.preventDefault();
     const LoginQuery =`mutation{
       signinUser(
@@ -39,7 +43,11 @@ class Login extends Component {
         window.localStorage.setItem("token", token)
         window.localStorage.setItem("email", email)
         this.props.history.push("/")
+
       }catch(e){
+        this.setState({
+          disabled: false
+        })
         toastr.error("Incorrect Username or Password")
         this.props.history.push("/login")
       }
@@ -47,6 +55,7 @@ class Login extends Component {
   }
 
   render() {
+    const {disabled} = this.state;
     return (
       <div className='login-form'>
       {/*
@@ -83,7 +92,7 @@ class Login extends Component {
                 onChange={e => this.setState({ password: e.target.value })}
               />
 
-              <Button color='teal' fluid size='large' onClick={this.handleLogin}>
+              <Button color='teal' fluid size='large' onClick={this.handleLogin} disabled={disabled}>
                 Login
               </Button>
             </Segment>
