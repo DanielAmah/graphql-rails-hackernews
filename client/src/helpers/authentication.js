@@ -1,60 +1,56 @@
-import axios from 'axios'
-import { config } from '../config';
+import axios from "axios";
+import configBase from "../config";
 
-const baseURL =  `${config.RAILS_API_BASE_URL}/`;
+const baseURL = `${configBase.RAILS_API_BASE_URL}/`;
 
 export const axiosInstance = axios.create({
-  baseURL: baseURL
+  baseURL
 });
 
-export const isAuthenticated = (props) => {
-  if(window.localStorage.getItem("token")){
-      return true
-    }else {
-     return false
-    }
-
-}
+export const isAuthenticated = () => {
+  if (window.localStorage.getItem("token")) {
+    return true;
+  }
+  return false;
+};
 
 export class Api {
-
   static config() {
     try {
-      const token = window.localStorage.getItem('jwt-token')
-      return(
+      const token = window.localStorage.getItem("jwt-token");
+      return (
         token && {
           headers: {
             Authorization: `Bearer ${token}`
           }
         }
-      )
-    }
-    catch(e){
-      return null
+      );
+    } catch (e) {
+      return null;
     }
   }
 
   static get(url, params, conf) {
-    const headers = this.config()
-    const config = { ...headers, params, ...conf }
-    return axiosInstance.get(url, config)
+    const headers = this.config();
+    const config = { ...headers, params, ...conf };
+    return axiosInstance.get(url, config);
   }
 
   static post(url, data, conf) {
-    const headers = this.config()
-    const config = { ...headers, ...conf }
-    return axiosInstance.post(url, data, config)
+    const headers = this.config();
+    const config = { ...headers, ...conf };
+    return axiosInstance.post(url, data, config);
   }
 
   static put(url, data, conf) {
-    const headers = this.config()
-    const config = { ...headers, ...conf }
-    return axiosInstance.put(url, data, config)
+    const headers = this.config();
+    const config = { ...headers, ...conf };
+    return axiosInstance.put(url, data, config);
   }
 
   static delete(url, conf) {
-    const headers = this.config()
-    const config = { ...headers, ...conf }
-    return axiosInstance.delete(url, config)
+    const headers = this.config();
+    const config = { ...headers, ...conf };
+    return axiosInstance.delete(url, config);
   }
 }
