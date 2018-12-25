@@ -13,7 +13,7 @@ import Loader from './Loader'
 import '../App.css'
 
 
-
+const PER_PAGE = 7
 class HomepageHeading extends React.Component {
   constructor(props) {
     super(props);
@@ -23,7 +23,10 @@ class HomepageHeading extends React.Component {
       url: '',
       description: '',
       disabled: false,
-      loading: false
+      loading: false,
+      offset: 0,
+      limit: PER_PAGE,
+      total: 0
     }
     this.handleCreateLink = this.handleCreateLink.bind(this);
   }
@@ -77,7 +80,7 @@ class HomepageHeading extends React.Component {
       loading: true
     })
     let showListings = `query {
-      allLinks {
+      allLinks(first: ${this.state.limit}, skip: ${this.state.offset}) {
         id
         url
         description,
@@ -86,6 +89,9 @@ class HomepageHeading extends React.Component {
           email
         }
       }
+      meta {
+        count
+      }
     }`
     const token = window.localStorage.getItem("token")
     const email = window.localStorage.getItem("email")
@@ -93,10 +99,36 @@ class HomepageHeading extends React.Component {
       const res = await axiosInstance.post("graphql", { query: showListings },{headers: {'X-User-Email': email, 'X-User-Token': token}})
       this.setState({
         allUrls: res.data.data.allLinks,
+        total: res.data.data.meta.count,
         loading: false
       })
     }catch(e){
       toastr.error(e.message)
+    }
+  }
+
+  handlePageClickPrev =() => {
+    // Load prev 10 users
+    let offset = this.state.offset - PER_PAGE
+    if (offset < 0) return
+    this.setState({offset: offset}, () => {
+      this.showUrlListings();
+    });
+  };
+
+  handlePageClickNext = () => {
+    // Load next 10 users
+    let offset = this.state.offset + PER_PAGE
+    if (offset <= this.state.total){
+
+     this.setState({offset: offset }, () => {
+      this.showUrlListings();
+    });
+  }
+  else {
+    this.setState({
+      disabled: true
+      })
     }
   }
   render() {
@@ -152,6 +184,8 @@ class HomepageHeading extends React.Component {
         <List divided relaxed>
           {urlItems}
         </List>
+        <button onClick={this.handlePageClickPrev}>Prev</button>
+        <button onClick={this.handlePageClickNext}>Next</button>
       </Container>
       </div>
     )
