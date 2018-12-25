@@ -1,14 +1,11 @@
+export const jsonwebtoken = () => {
+  let loggedInUser;
+  if (window.localStorage.getItem("email")) {
+    const email = window.localStorage.getItem("email");
 
-export const jsonwebtoken = (props) => {
-  if(window.localStorage.getItem("email")){
-    const email = window.localStorage.getItem("email")
+    loggedInUser = email;
+  }
+  return loggedInUser;
+};
 
-      const loggedInUser = email
-      return loggedInUser;
-
-    }else {
-      const loggedInUser = ''
-      return loggedInUser;
-    }
-
-}
+export default jsonwebtoken;
