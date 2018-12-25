@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class AddUserIdLink < ActiveRecord::Migration[5.2]
   def change
     change_table :links do |t|

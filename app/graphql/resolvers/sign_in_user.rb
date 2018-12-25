@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class Resolvers::SignInUser < GraphQL::Function
   argument :email, !Types::AuthProviderEmailInput
 
@@ -8,21 +10,22 @@ class Resolvers::SignInUser < GraphQL::Function
   end
 
   def call(_obj, args, ctx)
-
     input = args[:email]
 
     return unless input
+
     # user = User.valid_login?(input[:email], input[:password])
     user = User.find_by email: input[:email]
     return unless user
     return unless user.valid_password?(input[:password])
+
     if user.update_column(:authentication_token, Devise.friendly_token)
       token = user.authentication_token
       ctx[:session][:token] = token
-      OpenStruct.new({
+      OpenStruct.new(
         token: token,
-        user: user
-      })
+        user:  user
+      )
     end
   end
 end

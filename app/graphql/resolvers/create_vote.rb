@@ -1,9 +1,9 @@
-class Resolvers::CreateVote < GraphQL::Function
+# frozen_string_literal: true
 
+class Resolvers::CreateVote < GraphQL::Function
   argument :linkId, types.ID
 
   type Types::VoteType
-
 
   def call(_obj, args, ctx)
     Vote.create!(
