@@ -21,17 +21,17 @@ Devise.setup do |config|
 
   # devise-jwt
   config.jwt do |jwt|
-    jwt.secret = ENV['DEVISE_JWT_SECRET_KEY']
+    jwt.secret = ENV["DEVISE_JWT_SECRET_KEY"]
     jwt.dispatch_requests = [
-      ['POST', %r{^/login$}]
+      ["POST", %r{^/login$}]
     ]
     jwt.revocation_requests = [
-      ['DELETE', %r{^/logout$}]
+      ["DELETE", %r{^/logout$}]
     ]
     jwt.expiration_time = 1.day.to_i
   end
 
-  config.mailer_sender = 'please-change-me-at-config-initializers-devise@example.com'
+  config.mailer_sender = "please-change-me-at-config-initializers-devise@example.com"
 
   # Configure the class responsible to send e-mails.
   # config.mailer = 'Devise::Mailer'
@@ -43,7 +43,7 @@ Devise.setup do |config|
   # Load and configure the ORM. Supports :active_record (default) and
   # :mongoid (bson_ext recommended) by default. Other ORMs may be
   # available as additional gems.
-  require 'devise/orm/active_record'
+  require "devise/orm/active_record"
 
   # ==> Configuration for any authentication mechanism
   # Configure which keys are used when authenticating a user. The default is

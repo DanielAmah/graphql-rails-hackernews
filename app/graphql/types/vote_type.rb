@@ -1,5 +1,7 @@
+# frozen_string_literal: true
+
 Types::VoteType = GraphQL::ObjectType.define do
-  name 'Vote'
+  name "Vote"
 
   field :id, types.ID
   field :user, -> { Types::UserType }

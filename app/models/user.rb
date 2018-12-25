@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class User < ApplicationRecord
   acts_as_token_authenticatable
   # Include default devise modules. Others available are:
@@ -5,8 +7,8 @@ class User < ApplicationRecord
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable, :jwt_authenticatable, jwt_revocation_strategy: JWTBlacklist
 
-  has_many :votes
-  has_many :links
+  has_many :votes, dependent: :destroy
+  has_many :links, dependent: :destroy
 
   def reset_authentication_token!
     update_column(:authentication_token, Devise.friendly_token)

@@ -1,7 +1,8 @@
-require 'search_object/plugin/graphql'
+# frozen_string_literal: true
+
+require "search_object/plugin/graphql"
 
 class Resolvers::LinksSearch
-
   include SearchObject.module(:graphql)
 
   scope { Link.all }
@@ -9,7 +10,7 @@ class Resolvers::LinksSearch
   type !types[Types::LinkType]
 
   LinkFilter = GraphQL::InputObjectType.define do
-    name 'LinkFilter'
+    name "LinkFilter"
 
     argument :OR, -> { types[LinkFilter] }
     argument :description_contains, types.String
@@ -30,20 +31,20 @@ class Resolvers::LinksSearch
 
   def apply_filter(scope, value)
     # normalize filters from nested OR structure, to flat scope list
-    branches = normalize_filters(value).reduce { |a, b| a.or(b) }
+    branches = normalize_filters(value).inject {|a, b| a.or(b) }
     scope.merge branches
   end
 
-  def normalize_filters(value, branches = [])
+  def normalize_filters(value, branches=[])
     # add like SQL conditions
     scope = Link.all
-    scope = scope.where('description LIKE ?', "%#{value['description_contains']}%") if value['description_contains']
-    scope = scope.where('url LIKE ?', "%#{value['url_contains']}%") if value['url_contains']
+    scope = scope.where("description LIKE ?", "%#{value['description_contains']}%") if value["description_contains"]
+    scope = scope.where("url LIKE ?", "%#{value['url_contains']}%") if value["url_contains"]
 
     branches << scope
 
     # continue to normalize down
-    value['OR'].reduce(branches) { |s, v| normalize_filters(v, s) } if value['OR'].present?
+    value["OR"].inject(branches) {|s, v| normalize_filters(v, s) } if value["OR"].present?
 
     branches
   end

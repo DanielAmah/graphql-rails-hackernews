@@ -1,4 +1,6 @@
-require_relative 'boot'
+# frozen_string_literal: true
+
+require_relative "boot"
 
 require "rails"
 # Pick the frameworks you want:
@@ -12,7 +14,7 @@ require "action_view/railtie"
 require "action_cable/engine"
 require "sprockets/railtie"
 require "rails/test_unit/railtie"
-require './lib/json_web_token.rb'
+require "./lib/json_web_token.rb"
 # Require the gems listed in Gemfile, including any gems
 # you've limited to :test, :development, or :production.
 Bundler.require(*Rails.groups)
@@ -24,11 +26,10 @@ module GraphqlHackernewsRails
 
     config.middleware.insert_before 0, Rack::Cors do
       allow do
-        origins 'localhost:3000', 'https://hackernewz.herokuapp.com'
-        resource '*', headers: :any, methods: [:get, :post, :options]
+        origins "localhost:3000", "https://hackernewz.herokuapp.com"
+        resource "*", headers: :any, methods: %i[get post options]
       end
     end
-
 
     # Settings in config/environments/* take precedence over those specified here.
     # Application configuration can go into files in config/initializers
