@@ -1,0 +1,15 @@
+language: ruby
+rvm:
+- 2.4.4
+before_script:
+- bundle exec rake db:create --all
+- bundle exec rake db:migrate
+script:
+- bundle exec rake ci:tests
+services:
+- postgresql
+notifications:
+  email: false
+deploy:
+  api_key:
+    secure: G/KF7okX4+13KbyMRhQvYy8ecHHnO6XpA+o0TwanbAukmgsSYZCxakVLOIdeLHwp50V82Fqg34vRMlsKw5s75Gn4mS5ZZuRkelxKTGHWgXyfgwAukcMnIx5IKZkCwD4/9dG/VyCExpHV1PdPckP701PA7IBJ2jISE8rugGtv6H8y199ivrVAN6J1fKkBlhmbvhUyGZbcYtiIJQglnv3qIVPlCHXPeIMbyHk5rUem8pMkrbnpBGqmJTgceGpBhvIpWeSiEDopZUc+eG/eLQM0ll4t0he5PRVT5kRM+bIweUlV+aHZ0buGO11/EwOg/Idzvmsg/6cO9E5sBndxdp4c8I/e/o//W0b+U3p2FN4LpEm04Y5Zxc6WWtZY+YknWV/T+pXF9/4Ay9ar3daIsv709o4nvEZMQgON1Ro+NhCdvvq2x1VJ88Matn+mZpZv4PN8YCS45qKGqjNcgzAB1iei29ygM4oUz4f+jLx5lYsls3aIYv9quvXNTQZhX4gZaqYL2HWSQsu9Zvu+bJN/UZ7EOCjARrKPwZQ4hEGsunupNFybnmKbiU2UTLOWr1rzJ062eqkMC1cqN1EAU5RcaBuzptCcNEVJraVArbJbMFeEPnJqXM6drgfuUNBp2iosPRJfFcvVPdY3WA8uk8EC50qPiunyTTBZIsW1vRa8BeHgp5g=
