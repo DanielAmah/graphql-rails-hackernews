@@ -46,14 +46,15 @@ gem "bootsnap", ">= 1.1.0", require: false
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem "byebug", platforms: %i[mri mingw x64_mingw]
-  gem 'rspec-rails'
-  gem 'shoulda-matchers'
-  gem 'factory_girl_rails'
-  gem 'pry'
-  gem 'pry-byebug'
-  gem 'cucumber-rails', require: false
-  gem 'database_cleaner'
-  gem 'coveralls', require: false
+  gem "coveralls", require: false
+  gem "cucumber-rails", require: false
+  gem "database_cleaner"
+  gem "factory_bot_rails"
+  gem "faker", "~> 1.8", ">= 1.8.7"
+  gem "pry"
+  gem "pry-byebug"
+  gem "rspec-rails"
+  gem "shoulda-matchers"
 end
 gem "bcrypt", "~> 3.1.7"
 gem "graphql", "1.7.4"
