@@ -21,10 +21,21 @@ RSpec.describe Link, type: :model do
     # check that the fields received the right values
     it { expect(link).to allow_value(attributes[:url]).for(:url) }
     it { expect(link).to allow_value(attributes[:description]).for(:url) }
-    # ensure that the title field is never empty
-    it { expect(link).to validate_presence_of(:url) }
-    # ensure that the title is unique for each todo list
-    it { expect(link).to validate_presence_of(:description) }
+
+    it "is not valid without a url" do
+      link = Link.new(url: nil)
+      expect(link).to_not be_valid
+    end
+
+    it "is not valid without a description" do
+      link = Link.new(description: nil)
+      expect(link).to_not be_valid
+    end
+
+    it "is valid" do
+      link = Link.new(url: "http://bcd.com", description: "yet another description", user_id: user.id)
+      expect(link).to be_valid
+    end
   end
 
   describe "model associations" do
