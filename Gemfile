@@ -55,6 +55,7 @@ group :development, :test do
   gem "pry-byebug"
   gem "rspec-rails"
   gem "shoulda-matchers"
+  gem 'rspec-graphql_matchers'
 end
 gem "bcrypt", "~> 3.1.7"
 gem "graphql", "1.7.4"
