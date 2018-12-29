@@ -9,8 +9,4 @@ class User < ApplicationRecord
 
   has_many :votes, dependent: :destroy
   has_many :links, dependent: :destroy
-
-  def reset_authentication_token!
-    update_column(:authentication_token, Devise.friendly_token)
-  end
 end
