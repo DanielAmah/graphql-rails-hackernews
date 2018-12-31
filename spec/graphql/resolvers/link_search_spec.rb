@@ -50,7 +50,6 @@ describe "All Links Query", type: :request do
   end
 end
 
-
 describe "Filter Description Query", type: :request do
   include_context "GraphQL Client"
   let!(:link1) { create(:link) }
@@ -124,7 +123,7 @@ describe "Filter with two descriptions query", type: :request do
   end
 
   it "returns the filtered description" do
-    response = client.execute(query, description1: link1.description, description2: link2.description )
+    response = client.execute(query, description1: link1.description, description2: link2.description)
     first_link = response.data.all_links[0]
     second_link = response.data.all_links[1]
     expect(first_link.description).to eq link1.description

@@ -49,5 +49,10 @@ RSpec.describe User, type: :model do
       logged_in_user = registered_user.valid_password?(user.password)
       expect(logged_in_user).to be true
     end
+
+    it "sends an email" do
+      expect { user.send_instructions }
+        .to change { ActionMailer::Base.deliveries.count }.by(1)
+    end
   end
 end

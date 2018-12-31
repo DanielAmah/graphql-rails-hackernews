@@ -9,4 +9,8 @@ class User < ApplicationRecord
 
   has_many :votes, dependent: :destroy
   has_many :links, dependent: :destroy
+
+  def send_instructions
+    ApplicationMailer.instructions(self).deliver_now
+  end
 end

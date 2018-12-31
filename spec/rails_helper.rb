@@ -5,6 +5,7 @@ require "spec_helper"
 
 ENV["RAILS_ENV"] ||= "test"
 require File.expand_path("../config/environment", __dir__)
+
 # Prevent database truncation if the environment is production
 abort("The Rails environment is running in production mode!") if Rails.env.production?
 require "rspec/rails"
@@ -33,7 +34,8 @@ rescue ActiveRecord::PendingMigrationError => e
   puts e.to_s.strip
   exit 1
 end
-
+require "action_cable/testing/rspec"
+ActiveJob::Base.queue_adapter = :test
 Shoulda::Matchers.configure do |config|
   config.integrate do |with|
     with.test_framework :rspec
