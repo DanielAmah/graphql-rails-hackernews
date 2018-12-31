@@ -86,6 +86,8 @@
     "start": "node scripts/start.js",
     "build": "node scripts/build.js",
     "test": "node scripts/test.js",
+    "coverage": "node scripts/test.js --env=jsdom --coverage",
+    "coveralls": "cat ./coverage/lcov.info | node node_modules/.bin/coveralls",
     "precommit": "NODE_ENV=production lint-staged"
   },
   "lint-staged": {
@@ -151,6 +153,7 @@
     ]
   },
   "devDependencies": {
+    "coveralls": "^3.0.2",
     "eslint-plugin-prettier": "^3.0.0"
   }
 }

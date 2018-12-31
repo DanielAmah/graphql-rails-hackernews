@@ -6,6 +6,11 @@ before_script:
 - bundle exec rake db:migrate
 script:
 - bundle exec rake ci:tests
+- cd client && npm install && npm test -- --coverage
+
+after_script: # Upload coverage reports
+  - COVERALLS_REPO_TOKEN=$coveralls_repo_token cd client && npm run coveralls
+
 services:
 - postgresql
 notifications:
