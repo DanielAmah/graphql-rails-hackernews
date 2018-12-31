@@ -1,5 +1,9 @@
 # README
 
+[![Build Status](https://www.travis-ci.org/DanielAmah/graphql-rails-hackernews.svg?branch=master)](https://www.travis-ci.org/DanielAmah/graphql-rails-hackernews)
+
+[![Coverage Status](https://coveralls.io/repos/github/DanielAmah/graphql-rails-hackernews/badge.svg?branch=master)](https://coveralls.io/github/DanielAmah/graphql-rails-hackernews?branch=master)
+
 This README would normally document whatever steps are necessary to get the
 application up and running.
 
