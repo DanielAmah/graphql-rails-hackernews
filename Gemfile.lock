@@ -130,6 +130,10 @@ GEM
       railties (>= 3.0.0)
     faker (1.9.1)
       i18n (>= 0.7)
+    faraday (0.15.4)
+      multipart-post (>= 1.2, < 3)
+    faraday_middleware (0.12.2)
+      faraday (>= 0.7.4, < 1.0)
     ffi (1.9.25)
     foreman (0.82.0)
       thor (~> 0.19.1)
@@ -138,10 +142,17 @@ GEM
       activesupport (>= 4.2.0)
     graphiql-rails (1.4.4)
       rails
+    graphlient (0.3.3)
+      faraday
+      faraday_middleware
+      graphql-client
     graphql (1.7.4)
     graphql-batch (0.3.10)
       graphql (>= 0.8, < 2)
       promise.rb (~> 0.7.2)
+    graphql-client (0.14.0)
+      activesupport (>= 3.0, < 6.0)
+      graphql (~> 1.6)
     graphql-preload (1.0.4)
       activerecord (>= 3.2, < 6)
       graphql (>= 1.5, < 2)
@@ -179,6 +190,7 @@ GEM
     msgpack (1.2.4)
     multi_json (1.13.1)
     multi_test (0.1.2)
+    multipart-post (2.0.0)
     nio4r (2.3.1)
     nokogiri (1.9.1)
       mini_portile2 (~> 2.4.0)
@@ -338,6 +350,7 @@ DEPENDENCIES
   faker (~> 1.8, >= 1.8.7)
   foreman (~> 0.82.0)
   graphiql-rails (= 1.4.4)
+  graphlient
   graphql (= 1.7.4)
   graphql-preload (~> 1.0.4)
   jbuilder (~> 2.5)

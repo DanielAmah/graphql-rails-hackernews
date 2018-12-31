@@ -51,11 +51,12 @@ group :development, :test do
   gem "database_cleaner"
   gem "factory_bot_rails"
   gem "faker", "~> 1.8", ">= 1.8.7"
+  gem "graphlient"
   gem "pry"
   gem "pry-byebug"
+  gem "rspec-graphql_matchers"
   gem "rspec-rails"
   gem "shoulda-matchers"
-  gem 'rspec-graphql_matchers'
 end
 gem "bcrypt", "~> 3.1.7"
 gem "graphql", "1.7.4"

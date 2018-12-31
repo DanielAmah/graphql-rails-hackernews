@@ -1,0 +1,51 @@
+# frozen_string_literal: true
+
+require "rails_helper"
+
+describe "All Links Query", type: :request do
+  include_context "GraphQL Client"
+  let!(:link1) { create(:link) }
+  let!(:link2) { create(:link) }
+  let!(:user) { create(:user) }
+  let(:query) do
+    <<-GRAPHQL
+      query($first: Int!, $skip: Int!) {
+        allLinks(
+          first: $first,
+          skip: $skip
+        ){
+          id
+          url
+          description,
+          postedBy {
+            id
+            email
+          }
+        }
+        meta {
+          count
+        }
+      }
+    GRAPHQL
+  end
+
+  it "returns the count" do
+    response = client.execute(query, first: 2, skip: 0)
+    meta_count = response.data.meta.count
+    first_link = response.data.all_links[0]
+    expect(meta_count).to eq Link.count
+    expect(first_link.url).to eq link1.url
+  end
+
+  it "returns the one link when skip is 1" do
+    response = client.execute(query, first: 2, skip: 1)
+    all_link_count = response.data.all_links.count
+    expect(all_link_count).to eq 1
+  end
+
+  it "returns the one link when skip is 1" do
+    response = client.execute(query, first: 2, skip: 2)
+    all_link_count = response.data.all_links.count
+    expect(all_link_count).to eq 0
+  end
+end
