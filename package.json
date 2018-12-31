@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "scripts": {
     "build": "cd client && npm install --only=dev && npm install && npm run build && cd ..",
+    "test": "cd client && npm install && npm run coverage",
     "deploy": "cp -a client/build/. public/",
     "heroku-postbuild": "npm run build && npm run deploy && echo 'Client Built'"
   },
