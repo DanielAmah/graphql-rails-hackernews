@@ -58,6 +58,7 @@ group :development, :test do
   gem "rspec-graphql_matchers"
   gem "rspec-rails"
   gem "shoulda-matchers"
+  gem 'simplecov-lcov', '~> 0.5.0'
 end
 gem "bcrypt", "~> 3.1.7"
 gem "graphql", "1.7.4"
