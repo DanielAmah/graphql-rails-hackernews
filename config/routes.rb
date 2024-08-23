@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
 Rails.application.routes.draw do
+  mount Rswag::Api::Engine => '/api-docs'
+  mount Rswag::Ui::Engine => '/api-docs'
   namespace :api do
     devise_for :users,
                path:        "",
@@ -13,7 +15,6 @@ Rails.application.routes.draw do
                  sessions:      "api/sessions",
                  registrations: "api/registrations"
                }
-
     if Rails.env.development?
       authenticated do
         mount GraphiQL::Rails::Engine, at: "/graphiql", graphql_path: "/api/graphql"

@@ -7,6 +7,6 @@ class ApplicationController < ActionController::Base
   respond_to :json
 
   def fallback_index_html
-    render file: "public/index.html"
+    render file: "public/404.html"
   end
 end

@@ -31,6 +31,7 @@ describe "All Links Query", type: :request do
 
   it "returns the count" do
     response = client.execute(query, first: 2, skip: 0)
+
     meta_count = response.data.meta.count
     first_link = response.data.all_links[0]
     expect(meta_count).to eq Link.count
@@ -96,6 +97,7 @@ describe "Filter Url Query", type: :request do
 
   it "returns the filtered url" do
     response = client.execute(query, url: link2.url)
+
     first_link = response.data.all_links[0]
     expect(first_link.url).to eq link2.url
   end
@@ -111,11 +113,11 @@ describe "Filter with two descriptions query", type: :request do
       query($description1: String!, $description2: String!) {
         allLinks(
           filter:{
-          description_contains: $description1,
-          OR:{
-            description_contains: $description2,
-          }
-        }){
+            OR:[
+              { description_contains: $description1 },
+              { description_contains: $description2 }
+            ]
+          }){
           description
         }
       }
@@ -124,6 +126,7 @@ describe "Filter with two descriptions query", type: :request do
 
   it "returns the filtered description" do
     response = client.execute(query, description1: link1.description, description2: link2.description)
+
     first_link = response.data.all_links[0]
     second_link = response.data.all_links[1]
     expect(first_link.description).to eq link1.description

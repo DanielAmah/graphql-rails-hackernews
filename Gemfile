@@ -3,7 +3,7 @@
 source "https://rubygems.org"
 git_source(:github) {|repo| "https://github.com/#{repo}.git" }
 
-ruby "2.4.4"
+ruby "2.7.5"
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem "rails", "~> 5.2.1", ">= 5.2.1.1"
@@ -58,9 +58,18 @@ group :development, :test do
   gem "rspec-graphql_matchers"
   gem "rspec-rails"
   gem "shoulda-matchers"
+
+  gem 'action-cable-testing'
+
+  gem 'faraday-rack'
+
+  gem 'rswag-ui'
+  gem 'rswag-api'
+  gem 'rswag-specs'
+
 end
 gem "bcrypt", "~> 3.1.7"
-gem "graphql", "1.7.4"
+gem "graphql", "1.10.10"
 gem "minitest-rails"
 gem "search_object", "1.2.0"
 gem "search_object_graphql", "0.1"
@@ -83,3 +92,8 @@ gem "graphql-preload", "~> 1.0.4"
 gem "jwt", "~> 2.1.0"
 gem "rack-cors", require: "rack/cors"
 gem "simple_token_authentication", "~> 1.0"
+
+gem 'swagger-blocks'
+gem 'swagger_ui_engine'
+
+gem 'loofah', '2.21.3'

@@ -1,0 +1,158 @@
+---
+openapi: 3.0.1
+info:
+  title: API V1
+  version: v1
+components:
+  securitySchemes:
+    UserToken:
+      type: apiKey
+      name: HTTP_X_USER_TOKEN
+      in: header
+security:
+- UserToken: []
+paths:
+  "/api/graphql?operation=fetchAllLinks":
+    post:
+      summary: Fetch all links
+      operationId: fetchAllLinks
+      tags:
+      - GraphQL - Queries
+      security:
+      - UserToken: []
+      parameters: []
+      responses:
+        '200':
+          description: A list of all links
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                query:
+                  type: string
+                  example: "{ allLinks { id url description } }"
+              required:
+              - query
+  "/api/graphql?operation=fetchMetaData":
+    post:
+      summary: Fetch metadata
+      operationId: fetchMetaData
+      tags:
+      - GraphQL - Queries
+      security:
+      - UserToken: []
+      parameters: []
+      responses:
+        '200':
+          description: Metadata information
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                query:
+                  type: string
+                  example: "{ meta { count } }"
+              required:
+              - query
+  "/api/graphql?operation=createLink":
+    post:
+      summary: Create a Link
+      operationId: createLink
+      tags:
+      - GraphQL - Mutations
+      security:
+      - UserToken: []
+      parameters: []
+      responses:
+        '200':
+          description: Link created
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                query:
+                  type: string
+                  example: 'mutation { createLink(url: "http://example.com", description:
+                    "Example") { id url description } }'
+              required:
+              - query
+  "/api/graphql?operation=createVote":
+    post:
+      summary: Create a Vote
+      operationId: createVote
+      tags:
+      - GraphQL - Mutations
+      security:
+      - UserToken: []
+      parameters: []
+      responses:
+        '200':
+          description: Vote created
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                query:
+                  type: string
+                  example: 'mutation { createVote(linkId: "1") { id link { id } user
+                    { id } } }'
+              required:
+              - query
+  "/api/graphql?operation=createUser":
+    post:
+      summary: Create a User
+      operationId: createUser
+      tags:
+      - GraphQL - Mutations
+      parameters: []
+      responses:
+        '200':
+          description: User created
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                query:
+                  type: string
+                  example: 'mutation { createUser(name: "John Doe", authProvider:
+                    { email: { email: "john@example.com", password: "password" } })
+                    { id email } }'
+              required:
+              - query
+  "/api/graphql?operation=signinUser":
+    post:
+      summary: Sign in a User
+      operationId: signinUser
+      tags:
+      - GraphQL - Mutations
+      parameters: []
+      responses:
+        '200':
+          description: User signed in
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                query:
+                  type: string
+                  example: 'mutation { signinUser(email: { email: "john@example.com",
+                    password: "password" }) { token user { id email } } }'
+              required:
+              - query
+servers:
+- url: http://localhost:3001
+  variables:
+    defaultHost:
+      default: http://localhost:3001

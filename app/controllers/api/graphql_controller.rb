@@ -14,15 +14,16 @@ module Api
       }
       result = GraphqlHackernewsRailsSchema.execute(query, variables: variables, context: context, operation_name: operation_name)
       render json: result
-  end
+    end
 
     private
 
     def current_user
-      return nil if request.headers[:HTTP_X_USER_TOKEN].blank?
+      token = request.headers[:HTTP_X_USER_TOKEN] || request.headers[:HTTP_HTTP_X_USER_TOKEN]
+      return nil if token.blank?
 
-      token = request.headers[:HTTP_X_USER_TOKEN]
       User.find_by(authentication_token: token)
+
     end
 
     # Handle form data, JSON body, or a blank value
